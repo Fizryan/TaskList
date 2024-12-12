@@ -38,29 +38,32 @@ public class TaskList extends javax.swing.JFrame {
         RgsButtonLgn = new javax.swing.JButton();
         Homepage = new javax.swing.JPanel();
         HomepageBox = new javax.swing.JPanel();
+        MenuBox = new javax.swing.JPanel();
+        HomeLogoutBtn = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         TaskBox = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        DataTableBox = new javax.swing.JScrollPane();
+        DataTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1920, 1080));
         setMinimumSize(new java.awt.Dimension(860, 660));
-        setResizable(false);
         getContentPane().setLayout(new java.awt.CardLayout());
 
         LoginBG.setBackground(new java.awt.Color(255, 255, 255));
-        LoginBG.setMaximumSize(new java.awt.Dimension(820, 620));
+        LoginBG.setMaximumSize(new java.awt.Dimension(1920, 1080));
         LoginBG.setMinimumSize(new java.awt.Dimension(820, 620));
         LoginBG.setPreferredSize(new java.awt.Dimension(820, 620));
         LoginBG.setLayout(new java.awt.GridBagLayout());
 
         LoginBox.setBackground(new java.awt.Color(204, 204, 204));
         LoginBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        LoginBox.setMaximumSize(new java.awt.Dimension(680, 520));
+        LoginBox.setMaximumSize(new java.awt.Dimension(1780, 980));
         LoginBox.setMinimumSize(new java.awt.Dimension(680, 520));
         LoginBox.setName(""); // NOI18N
-        LoginBox.setPreferredSize(new java.awt.Dimension(680, 520));
-        LoginBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 500, 25));
+        LoginBox.setPreferredSize(new java.awt.Dimension(1780, 980));
+        LoginBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 2000, 25));
 
         LoginWelcome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         LoginWelcome.setText("Welcome Back");
@@ -152,18 +155,18 @@ public class TaskList extends javax.swing.JFrame {
         getContentPane().add(LoginBG, "loginCard");
 
         RegisterBG.setBackground(new java.awt.Color(255, 255, 255));
-        RegisterBG.setMaximumSize(new java.awt.Dimension(820, 620));
+        RegisterBG.setMaximumSize(new java.awt.Dimension(1920, 1080));
         RegisterBG.setMinimumSize(new java.awt.Dimension(820, 620));
         RegisterBG.setPreferredSize(new java.awt.Dimension(820, 620));
         RegisterBG.setLayout(new java.awt.GridBagLayout());
 
         RegisterBox.setBackground(new java.awt.Color(204, 204, 204));
         RegisterBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        RegisterBox.setMaximumSize(new java.awt.Dimension(680, 520));
+        RegisterBox.setMaximumSize(new java.awt.Dimension(1780, 980));
         RegisterBox.setMinimumSize(new java.awt.Dimension(680, 520));
         RegisterBox.setName(""); // NOI18N
         RegisterBox.setPreferredSize(new java.awt.Dimension(680, 520));
-        RegisterBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 500, 25));
+        RegisterBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 2000, 25));
 
         LoginWelcome2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         LoginWelcome2.setText("Lets Started");
@@ -272,7 +275,7 @@ public class TaskList extends javax.swing.JFrame {
         getContentPane().add(RegisterBG, "registerCard");
 
         Homepage.setBackground(new java.awt.Color(255, 255, 255));
-        Homepage.setMaximumSize(new java.awt.Dimension(820, 620));
+        Homepage.setMaximumSize(new java.awt.Dimension(1920, 1080));
         Homepage.setMinimumSize(new java.awt.Dimension(820, 620));
         Homepage.setPreferredSize(new java.awt.Dimension(820, 620));
         Homepage.setLayout(new java.awt.GridBagLayout());
@@ -280,23 +283,60 @@ public class TaskList extends javax.swing.JFrame {
         HomepageBox.setBackground(new java.awt.Color(204, 204, 204));
         HomepageBox.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         HomepageBox.setAutoscrolls(true);
-        HomepageBox.setMaximumSize(new java.awt.Dimension(680, 520));
+        HomepageBox.setMaximumSize(new java.awt.Dimension(1780, 980));
         HomepageBox.setMinimumSize(new java.awt.Dimension(680, 520));
         HomepageBox.setName(""); // NOI18N
         HomepageBox.setPreferredSize(new java.awt.Dimension(680, 520));
+        HomepageBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 2000, 5));
+
+        MenuBox.setMinimumSize(new java.awt.Dimension(600, 40));
+        MenuBox.setPreferredSize(new java.awt.Dimension(600, 40));
+        MenuBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 6));
+
+        HomeLogoutBtn.setText("Logout");
+        HomeLogoutBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        HomeLogoutBtn.setMaximumSize(new java.awt.Dimension(76, 26));
+        HomeLogoutBtn.setMinimumSize(new java.awt.Dimension(76, 26));
+        HomeLogoutBtn.setPreferredSize(new java.awt.Dimension(76, 26));
+        HomeLogoutBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeLogoutBtnMouseClicked(evt);
+            }
+        });
+        MenuBox.add(HomeLogoutBtn);
+
+        jPanel1.setMinimumSize(new java.awt.Dimension(380, 30));
+        jPanel1.setPreferredSize(new java.awt.Dimension(380, 30));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 0));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Task List");
-        HomepageBox.add(jLabel2);
+        jLabel2.setMaximumSize(new java.awt.Dimension(76, 26));
+        jLabel2.setMinimumSize(new java.awt.Dimension(76, 26));
+        jLabel2.setPreferredSize(new java.awt.Dimension(76, 26));
+        jPanel1.add(jLabel2);
 
-        TaskBox.setPreferredSize(new java.awt.Dimension(600, 40));
-        TaskBox.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 10));
+        MenuBox.add(jPanel1);
 
-        jLabel4.setText(null);
-        TaskBox.add(jLabel4);
+        HomepageBox.add(MenuBox);
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(400, 20));
-        TaskBox.add(jPanel1);
+        TaskBox.setMinimumSize(new java.awt.Dimension(680, 520));
+        TaskBox.setPreferredSize(new java.awt.Dimension(560, 440));
+
+        DataTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        DataTableBox.setViewportView(DataTable);
+
+        TaskBox.add(DataTableBox);
 
         HomepageBox.add(TaskBox);
 
@@ -322,6 +362,7 @@ public class TaskList extends javax.swing.JFrame {
         boolean passChecker = PasswordManager.isPasswordMatch(RgsPasswordField.getPassword(), RgsRepPasswordField.getPassword());
         if (userChecker) {
             if (passChecker){
+                clearField();
                 PasswordManager.savePasswordToFile(RgsUsernameField.getText(), RgsPasswordField.getPassword());
                 CardLayout cardLayout = (CardLayout) getContentPane().getLayout();
                 cardLayout.show(getContentPane(), "HomepageCard");
@@ -336,6 +377,7 @@ public class TaskList extends javax.swing.JFrame {
     private void LgnButtonLgnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LgnButtonLgnMouseClicked
         boolean loginChecker = PasswordManager.login(LgnUsernameField.getText(), LgnPasswordField.getPassword());
         if (loginChecker){
+            clearField();
             CardLayout cardLayout = (CardLayout) getContentPane().getLayout();
             cardLayout.show(getContentPane(), "HomepageCard");
         } else {
@@ -343,12 +385,26 @@ public class TaskList extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_LgnButtonLgnMouseClicked
 
+    private void HomeLogoutBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeLogoutBtnMouseClicked
+        CardLayout cardLayout = (CardLayout) getContentPane().getLayout();
+        cardLayout.show(getContentPane(), "loginCard");
+        PasswordManager.logout();
+    }//GEN-LAST:event_HomeLogoutBtnMouseClicked
+    
+    
+    // Fungsi untuk clear field
+    private void clearField(){
+        // Clear Field di login
+        LgnUsernameField.setText("");
+        LgnPasswordField.setText("");
+        
+        // Clear Field di register
+        RgsUsernameField.setText("");
+        RgsPasswordField.setText("");
+        RgsRepPasswordField.setText("");
+    }
+    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -365,9 +421,7 @@ public class TaskList extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TaskList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TaskList().setVisible(true);
@@ -376,6 +430,9 @@ public class TaskList extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable DataTable;
+    private javax.swing.JScrollPane DataTableBox;
+    private javax.swing.JButton HomeLogoutBtn;
     private javax.swing.JPanel Homepage;
     private javax.swing.JPanel HomepageBox;
     private javax.swing.JButton LgnButtonLgn;
@@ -388,6 +445,7 @@ public class TaskList extends javax.swing.JFrame {
     private javax.swing.JPanel LoginBox;
     private javax.swing.JLabel LoginWelcome;
     private javax.swing.JLabel LoginWelcome2;
+    private javax.swing.JPanel MenuBox;
     private javax.swing.JPanel RegisterBG;
     private javax.swing.JPanel RegisterBox;
     private javax.swing.JButton RgsButtonLgn;
@@ -404,7 +462,6 @@ public class TaskList extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
