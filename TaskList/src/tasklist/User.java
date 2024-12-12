@@ -3,8 +3,8 @@ package tasklist;
 import java.io.*;
 
 public class User {
-    private static String username;
-    private static String password;
+    private String username;
+    private String password;
     
     public User(String username, String password){
         File file = new File("user.dat");
