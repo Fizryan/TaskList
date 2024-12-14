@@ -2,7 +2,7 @@ package tasklist;
 
 import java.io.*;
 import java.security.*;
-import java.util.Arrays;
+import java.util.*;
 
 public class PasswordManager{
     private static String currentAccount;
@@ -45,11 +45,25 @@ public class PasswordManager{
         String pass = new String(password);
         File file = new File("user.dat");
         if (taskUtil.isFileExist()){
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            List<String> lines = new ArrayList<>();
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))){
+                String line;
+                while ((line = reader.readLine()) != null){
+                    lines.add(line);
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
+                for (String line : lines){
+                    writer.write(line);
+                    writer.newLine();
+                }
+                
                 String encryptedPassword = encryptPassword(pass);
                 writer.write(username + ":" + encryptedPassword);
-                writer.newLine();
-            } catch (IOException e) {
+            } catch (IOException e){
                 e.printStackTrace();
             }
         }
