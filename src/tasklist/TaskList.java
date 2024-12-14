@@ -41,13 +41,14 @@ public class TaskList extends javax.swing.JFrame {
         HomepageBox = new javax.swing.JPanel();
         MenuBox = new javax.swing.JPanel();
         HomeLogoutBtn = new javax.swing.JButton();
+        HomeRefreshBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         HomeDeleteBtn = new javax.swing.JButton();
         HomeAddBtn = new javax.swing.JButton();
         TaskBox = new javax.swing.JPanel();
         DataTask = new javax.swing.JScrollPane();
-        DataTaskList = new javax.swing.JList<>();
+        DataTaskList = new javax.swing.JTable();
         AddTaskBG = new javax.swing.JPanel();
         AddTaskBox = new javax.swing.JPanel();
         AddTaskMenuBox = new javax.swing.JPanel();
@@ -325,8 +326,21 @@ public class TaskList extends javax.swing.JFrame {
         });
         MenuBox.add(HomeLogoutBtn);
 
+        HomeRefreshBtn.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        HomeRefreshBtn.setText("Refresh");
+        HomeRefreshBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        HomeRefreshBtn.setMaximumSize(new java.awt.Dimension(76, 26));
+        HomeRefreshBtn.setMinimumSize(new java.awt.Dimension(76, 26));
+        HomeRefreshBtn.setPreferredSize(new java.awt.Dimension(76, 26));
+        HomeRefreshBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeRefreshBtnMouseClicked(evt);
+            }
+        });
+        MenuBox.add(HomeRefreshBtn);
+
         jPanel1.setMinimumSize(new java.awt.Dimension(380, 30));
-        jPanel1.setPreferredSize(new java.awt.Dimension(300, 30));
+        jPanel1.setPreferredSize(new java.awt.Dimension(200, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Task List");
@@ -339,9 +353,9 @@ public class TaskList extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(156, Short.MAX_VALUE)
+                .addContainerGap(64, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
+                .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,12 +364,17 @@ public class TaskList extends javax.swing.JFrame {
 
         MenuBox.add(jPanel1);
 
-        HomeDeleteBtn.setBackground(java.awt.SystemColor.activeCaptionBorder);
+        HomeDeleteBtn.setBackground(java.awt.SystemColor.controlDkShadow);
         HomeDeleteBtn.setText("Delete");
         HomeDeleteBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         HomeDeleteBtn.setMaximumSize(new java.awt.Dimension(76, 26));
         HomeDeleteBtn.setMinimumSize(new java.awt.Dimension(76, 26));
         HomeDeleteBtn.setPreferredSize(new java.awt.Dimension(76, 26));
+        HomeDeleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HomeDeleteBtnMouseClicked(evt);
+            }
+        });
         MenuBox.add(HomeDeleteBtn);
 
         HomeAddBtn.setBackground(java.awt.SystemColor.activeCaption);
@@ -381,11 +400,18 @@ public class TaskList extends javax.swing.JFrame {
         DataTask.setMinimumSize(new java.awt.Dimension(500, 400));
         DataTask.setPreferredSize(new java.awt.Dimension(500, 400));
 
-        DataTaskList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        DataTaskList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        DataTaskList.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         DataTask.setViewportView(DataTaskList);
 
         TaskBox.add(DataTask, new java.awt.GridBagConstraints());
@@ -564,6 +590,7 @@ public class TaskList extends javax.swing.JFrame {
         boolean loginChecker = PasswordManager.login(LgnUsernameField.getText(), LgnPasswordField.getPassword());
         if (clickCheck(evt)){
             if (loginChecker){
+                taskUtil.sortDataInFile(PasswordManager.getCurrentAccount());
                 taskUtil.loadDataToList(PasswordManager.getCurrentAccount(), DataTaskList);
                 CardLayout cardLayout = (CardLayout) getContentPane().getLayout();
                 cardLayout.show(getContentPane(), "HomepageCard");
@@ -603,6 +630,7 @@ public class TaskList extends javax.swing.JFrame {
             int input = (int) addDueDateField.getValue();
             if (input > 0){
                 taskUtil.saveDataToFile(PasswordManager.getCurrentAccount(), addTaskField.getText(), input);
+                taskUtil.sortDataInFile(PasswordManager.getCurrentAccount());
                 clearField();
                 taskUtil.loadDataToList(PasswordManager.getCurrentAccount(), DataTaskList);
             } else {
@@ -610,6 +638,31 @@ public class TaskList extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_addTaskButtonMouseClicked
+
+    private void HomeDeleteBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeDeleteBtnMouseClicked
+        if (clickCheck(evt)){
+            int result = JOptionPane.showConfirmDialog(
+                null, 
+                "Kamu yakin ingin menghapus tugas ini?", 
+                "Confirmation", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.WARNING_MESSAGE
+            );
+            if (result == JOptionPane.YES_OPTION) {
+                taskUtil.deleteRow(PasswordManager.getCurrentAccount(),DataTaskList);
+                taskUtil.sortDataInFile(PasswordManager.getCurrentAccount());
+                taskUtil.loadDataToList(PasswordManager.getCurrentAccount(), DataTaskList);
+            }
+        }
+    }//GEN-LAST:event_HomeDeleteBtnMouseClicked
+
+    private void HomeRefreshBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HomeRefreshBtnMouseClicked
+       if (clickCheck(evt)){
+           taskUtil.editSaveToFile(PasswordManager.getCurrentAccount(), DataTaskList);
+           taskUtil.sortDataInFile(PasswordManager.getCurrentAccount());
+           taskUtil.loadDataToList(PasswordManager.getCurrentAccount(), DataTaskList);
+       }
+    }//GEN-LAST:event_HomeRefreshBtnMouseClicked
     
     private static boolean clickCheck(java.awt.event.MouseEvent evt){
         return evt.getButton() == 1 && (!evt.isShiftDown() && !evt.isControlDown());
@@ -655,10 +708,11 @@ public class TaskList extends javax.swing.JFrame {
     private javax.swing.JPanel AddTaskMenuBox;
     private javax.swing.JPopupMenu AddTaskPopUp;
     private javax.swing.JScrollPane DataTask;
-    private javax.swing.JList<String> DataTaskList;
+    private javax.swing.JTable DataTaskList;
     private javax.swing.JButton HomeAddBtn;
     private javax.swing.JButton HomeDeleteBtn;
     private javax.swing.JButton HomeLogoutBtn;
+    private javax.swing.JButton HomeRefreshBtn;
     private javax.swing.JPanel Homepage;
     private javax.swing.JPanel HomepageBox;
     private javax.swing.JButton LgnButtonLgn;
