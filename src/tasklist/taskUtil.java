@@ -4,7 +4,9 @@ import java.io.*;
 import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class taskUtil {
@@ -199,49 +201,47 @@ public class taskUtil {
     // Fungsi buat edit data di Table di simpan ke file .dat
     public static void editSaveToFile(String username, javax.swing.JTable DataTaskList){
         File file = new File(username + ".dat");
-        if (file.exists()){
-            List<String> lines = new ArrayList<>();
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    lines.add(line);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {  
-                for (int row = 0; row < DataTaskList.getRowCount(); row++) {
-                    String task = (String) DataTaskList.getValueAt(row, 0);
-                    String dueDate = (String) DataTaskList.getValueAt(row, 2);
+        boolean wrongFormat = false;
+        boolean pastDate = false;
 
-                    boolean updated = false;
-                    for (int i = 0; i < lines.size(); i++) {
-                        String line = lines.get(i);
-                        String[] parts = line.split(":");
-                        String storedTask = parts[0];
-                        String storedDueDate = parts[1];
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yy");
+        LocalDate today = LocalDate.now();
 
-                        if (storedTask.equals(task) && storedDueDate.equals(dueDate)) {
-                            lines.set(i, task + ":" + dueDate);
-                            updated = true;
-                            break;
-                            
-                        }
+        for (int row = 0; row < DataTaskList.getRowCount(); row++) {
+            String dueDate = (String) DataTaskList.getValueAt(row, 2);
+                try {
+                    LocalDate date = LocalDate.parse(dueDate, dateFormatter);
+                    if (date.isBefore(today)) {
+                    pastDate = true;
+                    break;
                     }
-                    
-                    if (!updated) {
+                } catch (DateTimeParseException e) {
+                    wrongFormat = true;
+                    break;
+                }
+        }
+
+        if (file.exists()) {
+            if (!wrongFormat && !pastDate) {
+                List<String> lines = new ArrayList<>();
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                    for (int row = 0; row < DataTaskList.getRowCount(); row++) {
+                        String task = (String) DataTaskList.getValueAt(row, 0);
+                        String dueDate = (String) DataTaskList.getValueAt(row, 2);
                         lines.add(task + ":" + dueDate);
                     }
+                    for (String updatedLines : lines) {
+                        System.out.println(updatedLines);
+                        writer.write(updatedLines);
+                        writer.newLine();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                for (String updatedLine : lines) {
-                    writer.write(updatedLine);
-                    writer.newLine();
-                }
-
-                System.out.println("Data updated.");
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else if (wrongFormat) {
+                JOptionPane.showMessageDialog(null, "Format penulisan tanggal salah. Gunakan format dd-MM-yy.", "Warning", JOptionPane.WARNING_MESSAGE);
+            } else if (pastDate) {
+                JOptionPane.showMessageDialog(null, "Tanggal tenggat tidak boleh di bawah hari ini.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
