@@ -46,7 +46,7 @@ To set up the application on your local machine, follow these steps:
 Clone the repository to your local machine with:
 
 ```bash
-git clone https://github.com/Fizryan/TaskList
+git clone https://github.com/Fizryan/TaskList.git
 ```
 
 ### :hammer_and_wrench: **Compile and Run**
