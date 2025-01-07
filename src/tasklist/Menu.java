@@ -55,7 +55,7 @@ public class Menu {
         String username = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        if (userManager.login(username, password) && (!username.isBlank() || password.isBlank())){
+        if (userManager.login(username, password) && (!username.isBlank() || !password.isBlank())){
             try {
                 currentAccount = new Account(username, password, userManager);
                 System.out.println("Login Berhasil. Selamat datang " + currentAccount.getUsername());
