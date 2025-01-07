@@ -1,8 +1,10 @@
 # Task Manager Application 📋
 
 [![GitHub Issues](https://img.shields.io/github/issues/Fizryan/TaskList)](https://github.com/Fizryan/TaskList/issues)
-[![GitHub License](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Fizryan/TaskList/blob/main/LICENSE)
+[![GitHub License](https://img.shields.io/github/license/Fizryan/TaskList)](https://github.com/Fizryan/TaskList/blob/main/LICENSE)
 [![Java Version](https://img.shields.io/badge/Java-8%2B-blue)](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+[![GitHub repo size](https://img.shields.io/github/repo-size/Fizryan/TaskList?color=tomato)](https://github.com/Fizryan/TaskList)
+[![GitHub watchers](https://img.shields.io/github/watchers/Fizryan/TaskList)](https://github.com/Fizryan/TaskList/watchers)
 
 ### **Welcome to the Task Manager App!** 🚀  
 Effortlessly manage your **personal** and **work-related** tasks. Stay on top of your deadlines, keep track of your progress, and improve your productivity. 
