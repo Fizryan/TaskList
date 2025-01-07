@@ -5,16 +5,19 @@ import java.util.*;
 import task.*;
 import user.*;
 
+// Class buat tampilan menu
 public class Menu {
     private final UserManager userManager;
     private Scanner scanner;
     private Account currentAccount;
     
+    // Constructor Menu
     public Menu(){
         userManager = new UserManager();
         scanner = new Scanner(System.in);
     }
     
+    // Menu Utama
     public void start(){
         while (true){
             System.out.println("========== MENU UTAMA ==========");
@@ -45,13 +48,14 @@ public class Menu {
         }
     }
     
+    // Menu Login
     private void loginMenu(){
         System.out.println("========== LOGIN ==========");
         System.out.print("Username: ");
         String username = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        if (userManager.login(username, password)){
+        if (userManager.login(username, password) && (!username.isBlank() || password.isBlank())){
             try {
                 currentAccount = new Account(username, password, userManager);
                 System.out.println("Login Berhasil. Selamat datang " + currentAccount.getUsername());
@@ -64,17 +68,23 @@ public class Menu {
         }
     }
     
+    // Menu Register
     private void registerMenu(){
         System.out.println("========== REGISTER ==========");
         System.out.print("Username: ");
         String username = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
+        if (username.isBlank() || password.isBlank()){
+            System.out.println("Username atau Password tidak boleh kosong.");
+            return;
+        }
         if (userManager.register(username, password)){
             start();
         }
     }
     
+    // Menu Tugas
     private void taskMenu(String username){
         TaskManager taskManager = new TaskManager(username);
         
@@ -126,6 +136,7 @@ public class Menu {
         }
     }
     
+    // Menu Tambah Tugas
     private void addTask(TaskManager taskManager){
         System.out.println("\n========== Tambah Tugas ==========");
         System.out.print("Nama Tugas: ");
@@ -147,6 +158,10 @@ public class Menu {
                 System.out.println("Error: Jenis tugas hanya bisa 'Personal' atau 'Work'. Silakan coba lagi.");
             }
         }
+        if (taskName.isBlank() || description.isBlank() || dueDate.isBlank() || taskType.isBlank()){
+            System.out.println("Data tidak Boleh ada yang kosong!");
+            return;
+        }
         try {
             Date due = sdf.parse(dueDate);
             Date today = new Date();
@@ -161,6 +176,7 @@ public class Menu {
         }
     }
     
+    // Menu Edit Tugas
     private void editTask(TaskManager taskManager){
         System.out.println("\n========== Edit Tugas ==========");
         taskManager.displayTasks();
@@ -187,7 +203,10 @@ public class Menu {
             String newDueDate = scanner.nextLine();
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             sdf.setLenient(false);
-            System.out.println(taskID);
+            if (newTaskName.isBlank() || newDescription.isBlank() || newDueDate.isBlank()){
+                System.out.println("Data tidak Boleh ada yang kosong!");
+                return;
+            }
             try {
                 Date due = sdf.parse(newDueDate);
                 Date today = new Date();
@@ -205,6 +224,7 @@ public class Menu {
         }
     }
     
+    // Menu Delete Tugas
     private void deleteTask(TaskManager taskManager){
         System.out.println("\n========== Hapus Tugas ==========");
         taskManager.displayTasks();
@@ -234,6 +254,7 @@ public class Menu {
         }
     }
     
+    // Buat ganti Password
     private void changePassword(){
         System.out.println("\n========== Ubah Password ==========");
         System.out.print("Masukkan password lama: ");
@@ -242,6 +263,10 @@ public class Menu {
         String newPassword = scanner.nextLine();
         System.out.print("Ulangin password baru: ");
         String repPassword = scanner.nextLine();
+        if (oldPassword.isBlank() || newPassword.isBlank() || repPassword.isBlank()){
+            System.out.println("Data tidak Boleh ada yang kosong!");
+            return;
+        }
         if (newPassword.equals(repPassword)){
             try {
                 currentAccount.setPassword(oldPassword, newPassword, userManager);
@@ -253,6 +278,7 @@ public class Menu {
         }
     }
     
+    // Buat hapus akun T_T
     private boolean deleteAccount(){
         System.out.println("\n========== Delete Account ==========");
         System.out.print("Apakah kamu yakin ingin menghapus akun " + currentAccount.getUsername() + " ini? (y/n): ");
@@ -260,14 +286,14 @@ public class Menu {
         if (confirmation.equalsIgnoreCase("y") || confirmation.equalsIgnoreCase("yes")){
             try {
                 userManager.deleteAccount(currentAccount.getUsername(), currentAccount.getPassword());
-                System.out.println("Semoga kita bertemu lagi T_T");
+                System.out.println("Semoga kita bertemu lagi T_T\n");
                 currentAccount = null;
                 return true;
             } catch (IllegalArgumentException e){
                 System.out.println("Gagal menghapus akun: " + e.getMessage());
             }
         } else {
-            System.out.println("Penghapusan akun dibatalkan. ^U^");
+            System.out.println("Penghapusan akun dibatalkan. ^U^\n");
         }
         return false;
     }

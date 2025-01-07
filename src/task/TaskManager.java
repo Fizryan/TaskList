@@ -4,6 +4,7 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 
+// Class buat mengatur data Tugas
 public class TaskManager implements TaskInter{
     private final String taskFile;
     private List<Task> tasks = new ArrayList<>();
@@ -142,7 +143,7 @@ public class TaskManager implements TaskInter{
             System.out.println("Deskripsi\t: " + task.getDescription());
             System.out.println("Dibuat Tanggal\t: " + task.getCreatedDate());
             System.out.println("Tenggat Waktu\t: " + task.getDueDate());
-            System.out.println("Jenis Tugas: " + task.getTaskType());
+            System.out.println("Jenis Tugas\t: " + task.getTaskType());
             try {
                 Date dueDate = sdf.parse(task.getDueDate());
                 long diffInMills = dueDate.getTime() - today.getTime();
@@ -159,6 +160,7 @@ public class TaskManager implements TaskInter{
         }
     }
     
+    // Getter untuk Tugas
     public List<Task> getTasks(){
         return tasks;
     }

@@ -1,7 +1,5 @@
 package task;
 
-import user.*;
-
 // Interface buat TaskManager
 public interface TaskInter {
     public void addTask(String taskName, String description, String dueDate, String taskType);

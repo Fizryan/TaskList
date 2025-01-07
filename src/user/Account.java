@@ -1,5 +1,6 @@
 package user;
 
+// Class buat nyimpen data akun user saat program jalan
 public class Account {
     private String username;
     private String password;

@@ -3,6 +3,7 @@ package user;
 import java.io.*;
 import java.util.*;
 
+// Class buat mengatur data akun user
 public class UserManager implements Auth{
     private static final String USER_FILE = "user.dat";
     private HashMap<String, String> users = new HashMap<>();
